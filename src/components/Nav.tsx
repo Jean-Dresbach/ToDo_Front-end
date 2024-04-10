@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../redux"
-import { Container, IconButton, Typography } from "@mui/material"
+import { Container, Divider, IconButton, Typography } from "@mui/material"
 import { toggleTheme } from "../redux/slices/themesSlice"
 import { DarkMode, LightMode } from "@mui/icons-material"
 import { Box } from "@mui/system"
@@ -15,15 +15,22 @@ export function Nav() {
 
   return (
     <Container
-      maxWidth="lg"
-      sx={{ display: "flex", flexDirection: "column", height: "100%", p: 1 }}
+      maxWidth="xl"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        padding: "0 !important",
+        boxShadow: 10
+      }}
     >
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: 2
+          gap: 2,
+          p: 3
         }}
         component={"nav"}
       >
@@ -39,6 +46,7 @@ export function Nav() {
           )}
         </IconButton>
       </Box>
+      <Divider />
 
       <Outlet />
     </Container>
