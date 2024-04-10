@@ -1,11 +1,18 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 
-import { Nav } from "../components/Nav"
+import { Nav } from "../components"
+import { SignUp } from "../pages/SignUp"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Nav />
+    element: <Nav />,
+    children: [
+      {
+        path: "signup",
+        element: <SignUp />
+      }
+    ]
   }
 ])
 
