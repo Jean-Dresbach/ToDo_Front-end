@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 import { ISignUpUser } from "../types/user"
 
@@ -8,12 +8,12 @@ const api = axios.create({
 
 export async function signUp(data: ISignUpUser) {
   try {
-    const response = await api.post("/login", data)
+    const response = await api.post("/users", data)
 
-    return response.data.data
+    return response.data
   } catch (error) {
-    console.log(error)
-
-    return null
+    if (error instanceof AxiosError) {
+      return error.response?.data
+    }
   }
 }
