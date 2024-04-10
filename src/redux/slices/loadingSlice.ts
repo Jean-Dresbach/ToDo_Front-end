@@ -1,14 +1,14 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 
 const loadingSlice = createSlice({
   name: "loading",
   initialState: false,
   reducers: {
-    setLoading: (_, action: PayloadAction<boolean>) => {
-      return action.payload
+    toggleLoading: (state) => {
+      return !state
     }
   }
 })
 
-export const { setLoading } = loadingSlice.actions
+export const { toggleLoading } = loadingSlice.actions
 export default loadingSlice.reducer
