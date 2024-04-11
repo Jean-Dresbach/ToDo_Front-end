@@ -1,14 +1,18 @@
-import { Alert, Snackbar } from "@mui/material"
+import { Alert, AlertColor, Snackbar } from "@mui/material"
 import { useState } from "react"
 
 export function useSnackbar() {
   const [snackbar, setSnackbar] = useState({
     isOpen: false,
-    text: ""
+    text: "",
+    severity: "success" as AlertColor
   })
 
-  const toggleSnackbar = async (text: string = "") => {
-    setSnackbar((prevState) => ({ isOpen: !prevState.isOpen, text }))
+  const toggleSnackbar = async (
+    text: string = "",
+    severity: AlertColor = "success"
+  ) => {
+    setSnackbar((prevState) => ({ isOpen: !prevState.isOpen, text, severity }))
     await new Promise((resolve) => setTimeout(resolve, 2000))
   }
 
@@ -17,10 +21,16 @@ export function useSnackbar() {
       snackbar.isOpen && (
         <Snackbar
           open={snackbar.isOpen}
-          onClose={() => setSnackbar({ isOpen: false, text: "" })}
+          onClose={() =>
+            setSnackbar({ isOpen: false, text: "", severity: "success" })
+          }
           autoHideDuration={1500}
         >
-          <Alert severity="success" variant="outlined" sx={{ width: "100%" }}>
+          <Alert
+            severity={snackbar.severity}
+            variant="outlined"
+            sx={{ width: "100%" }}
+          >
             {snackbar.text}
           </Alert>
         </Snackbar>
