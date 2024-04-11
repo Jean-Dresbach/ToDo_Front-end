@@ -11,7 +11,7 @@ import {
 
 import { useAppDispatch, loginRequest } from "../redux"
 import { useSnackbar, useErrorAlert } from "../hooks"
-import { PasswordInputElement } from "../components/PasswordInputElement"
+import { PasswordInputElement } from "../components"
 
 export function Login() {
   const theme = useTheme()

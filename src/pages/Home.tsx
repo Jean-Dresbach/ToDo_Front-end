@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material"
 import { useEffect } from "react"
 
-import { TaskForm } from "../components/TaskForm"
+import { TaskForm } from "../components"
 import { useAppSelector } from "../redux"
 import { useNavigate } from "react-router-dom"
 

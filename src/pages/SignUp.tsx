@@ -12,7 +12,7 @@ import {
 import { useAppDispatch, toggleLoading } from "../redux"
 import { signUp } from "../services/api"
 import { useSnackbar, useErrorAlert } from "../hooks"
-import { PasswordInputElement } from "../components/PasswordInputElement"
+import { PasswordInputElement } from "../components"
 
 export function SignUp() {
   const theme = useTheme()
