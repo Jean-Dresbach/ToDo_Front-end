@@ -9,23 +9,14 @@ import {
   useTheme
 } from "@mui/material"
 
-import { useAppDispatch, toggleLoading } from "../redux"
-import { signUp } from "../services/api"
+import { useAppDispatch, loginRequest } from "../redux"
 import { useSnackbar, useErrorAlert } from "../hooks"
 import { PasswordInputElement } from "../components/PasswordInputElement"
 
-export function SignUp() {
+export function Login() {
   const theme = useTheme()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm: ""
-  })
-
   const { handleShowSnackbar, toggleSnackbar } = useSnackbar()
   const {
     handleShowErrorAlert,
@@ -33,6 +24,11 @@ export function SignUp() {
     errorAlert,
     setErrorAlert
   } = useErrorAlert()
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -43,22 +39,11 @@ export function SignUp() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (formData.password !== formData.confirm) {
-      return setErrorAlert({
-        isOpen: true,
-        field: "password",
-        message: "As senhas não coincidem"
-      })
-    }
-
     setErrorAlertoToIntialState()
-    dispatch(toggleLoading())
 
-    const result = await signUp(formData)
+    const result = await dispatch(loginRequest(formData)).unwrap()
 
-    dispatch(toggleLoading())
-
-    if (result.code !== 201) {
+    if (result.code !== 200) {
       return setErrorAlert({
         isOpen: true,
         field: result.field,
@@ -68,7 +53,7 @@ export function SignUp() {
 
     setErrorAlertoToIntialState()
     await toggleSnackbar(result.message)
-    navigate("/login")
+    navigate("/")
   }
 
   return (
@@ -93,18 +78,10 @@ export function SignUp() {
       >
         <Box mb={2}>
           <Typography variant="h4" gutterBottom component={"h1"}>
-            Cadastre-se
+            Login
           </Typography>
           <Divider />
         </Box>
-
-        <TextField
-          label="Nome"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-        />
 
         <TextField
           type="email"
@@ -112,24 +89,16 @@ export function SignUp() {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          color={errorAlert.field === "email" ? "error" : "primary"}
+          color={errorAlert.field === "all" ? "error" : "primary"}
           required
         />
 
         <PasswordInputElement
-          errorCase={errorAlert.field === "password"}
+          errorCase={errorAlert.field === "all"}
           handleInputChange={handleInputChange}
           label="Password"
           name="password"
           value={formData.password}
-        />
-
-        <PasswordInputElement
-          errorCase={errorAlert.field === "password"}
-          handleInputChange={handleInputChange}
-          label="Confirme senha"
-          name="confirm"
-          value={formData.confirm}
         />
 
         {handleShowErrorAlert()}
@@ -139,13 +108,13 @@ export function SignUp() {
           variant="contained"
           sx={{ borderRadius: "100vw", fontWeight: "bold", mt: 2 }}
         >
-          Criar conta
+          Entrar na conta
         </Button>
 
         <Typography>
-          Já tem uma conta?{" "}
+          Nãp tem uma conta?{" "}
           <Link
-            to="/login"
+            to="/signup"
             style={{
               textDecoration: "none",
               color: theme.palette.primary.main
