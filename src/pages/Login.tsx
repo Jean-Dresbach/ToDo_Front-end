@@ -17,7 +17,7 @@ export function Login() {
   const theme = useTheme()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { handleShowSnackbar, toggleSnackbar } = useSnackbar()
+  const { handleRenderSnackbar, handleOpenSnackbar } = useSnackbar()
   const {
     handleShowErrorAlert,
     setErrorAlertoToIntialState,
@@ -53,7 +53,7 @@ export function Login() {
 
     setErrorAlertoToIntialState()
 
-    toggleSnackbar(result.message)
+    handleOpenSnackbar(result.message)
 
     setTimeout(() => navigate("/"), 2000)
   }
@@ -127,7 +127,7 @@ export function Login() {
         </Typography>
       </Box>
 
-      {handleShowSnackbar()}
+      {handleRenderSnackbar()}
     </Box>
   )
 }

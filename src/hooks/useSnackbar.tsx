@@ -10,20 +10,27 @@ const initialState = {
 export function useSnackbar() {
   const [snackbar, setSnackbar] = useState(initialState)
 
-  const handleCloseSnackbar = () => {
+  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return
+    }
+
     setSnackbar(initialState)
   }
 
-  const toggleSnackbar = (text: string, severity: AlertColor = "success") => {
+  const handleOpenSnackbar = (
+    text: string,
+    severity: AlertColor = "success"
+  ) => {
     setSnackbar({ isOpen: true, text, severity })
   }
 
-  const handleShowSnackbar = () => {
+  const handleRenderSnackbar = () => {
     return (
       <Snackbar
         open={snackbar.isOpen}
-        onClose={handleCloseSnackbar}
         autoHideDuration={1500}
+        onClose={handleClose}
       >
         <Alert
           severity={snackbar.severity}
@@ -36,5 +43,5 @@ export function useSnackbar() {
     )
   }
 
-  return { toggleSnackbar, handleShowSnackbar }
+  return { handleOpenSnackbar, handleRenderSnackbar }
 }

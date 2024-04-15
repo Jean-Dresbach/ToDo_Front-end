@@ -26,7 +26,7 @@ export function SignUp() {
     confirm: ""
   })
 
-  const { handleShowSnackbar, toggleSnackbar } = useSnackbar()
+  const { handleRenderSnackbar, handleOpenSnackbar } = useSnackbar()
   const {
     handleShowErrorAlert,
     setErrorAlertoToIntialState,
@@ -69,7 +69,7 @@ export function SignUp() {
 
     setErrorAlertoToIntialState()
 
-    toggleSnackbar(result.message)
+    handleOpenSnackbar(result.message)
 
     setTimeout(() => navigate("/login"), 2000)
   }
@@ -159,7 +159,7 @@ export function SignUp() {
         </Typography>
       </Box>
 
-      {handleShowSnackbar()}
+      {handleRenderSnackbar()}
     </Box>
   )
 }
