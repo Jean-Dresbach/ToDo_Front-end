@@ -52,6 +52,7 @@ export function SignUp() {
     }
 
     setErrorAlertoToIntialState()
+
     dispatch(toggleLoading())
 
     const result = await signUp(formData)
@@ -67,8 +68,10 @@ export function SignUp() {
     }
 
     setErrorAlertoToIntialState()
-    await toggleSnackbar(result.message)
-    navigate("/login")
+
+    toggleSnackbar(result.message)
+
+    setTimeout(() => navigate("/login"), 2000)
   }
 
   return (

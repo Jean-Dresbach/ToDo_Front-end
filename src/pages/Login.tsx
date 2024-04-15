@@ -52,8 +52,10 @@ export function Login() {
     }
 
     setErrorAlertoToIntialState()
-    await toggleSnackbar(result.message)
-    navigate("/")
+
+    toggleSnackbar(result.message)
+
+    setTimeout(() => navigate("/"), 2000)
   }
 
   return (
