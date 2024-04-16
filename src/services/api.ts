@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios"
 
-import { ISignUpUser, ILoginUser } from "../types/user"
+import { ISignUpUser, ILoginUser, IUpdateUser } from "../types/user"
 import { ICreateTask } from "../types/task"
 
 const api = axios.create({
@@ -11,6 +11,29 @@ const api = axios.create({
 export async function signUp(data: ISignUpUser) {
   try {
     const response = await api.post("/users/create", data)
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
+
+export async function updateUser(
+  csrfToken: string,
+  userId: string,
+  data: IUpdateUser
+) {
+  try {
+    const response = await api.put(`/users/${userId}/update`, data, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
 
     return response.data
   } catch (error) {
