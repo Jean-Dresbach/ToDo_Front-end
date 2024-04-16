@@ -43,7 +43,7 @@ export function Home() {
 
       handleGetUserData()
     }
-  }, [dispatch, navigate])
+  }, [])
 
   return (
     <Box sx={{ p: 3 }}>

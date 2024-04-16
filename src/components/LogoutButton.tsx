@@ -14,7 +14,7 @@ import { useSnackbar } from "../hooks"
 import { logout } from "../services/api"
 import { ISession } from "../types/session"
 
-export function LogoutItem() {
+export function LogoutButton() {
   const { csrfToken, userId } = useAppSelector(
     (state) => state.session
   ) as ISession
@@ -55,7 +55,9 @@ export function LogoutItem() {
       <ListItemIcon>
         <LogoutRounded />
       </ListItemIcon>
+
       <ListItemText>Sair</ListItemText>
+
       {handleRenderSnackbar()}
     </MenuItem>
   )

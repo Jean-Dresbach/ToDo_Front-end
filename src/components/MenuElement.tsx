@@ -12,7 +12,7 @@ import {
 import { ToggleThemeNavMenuButtom } from "./ToggleThemeNavMenuButtom"
 import { HomeRounded, ManageAccountsRounded } from "@mui/icons-material"
 
-import { LogoutItem } from "./LogoutItem"
+import { LogoutButton } from "./LogoutButton"
 
 interface MenuElProps {
   open: boolean
@@ -90,7 +90,7 @@ export function MenuElement({ anchorEl, open, setAnchorEl }: MenuElProps) {
         <ListItemText>Perfil</ListItemText>
       </MenuItem>
 
-      <LogoutItem />
+      <LogoutButton />
     </Menu>
   )
 }
