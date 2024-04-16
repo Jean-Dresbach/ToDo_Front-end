@@ -20,7 +20,7 @@ export function TaskForm() {
     setErrorAlert,
     setErrorAlertoToIntialState
   } = useErrorAlert()
-  const { handleShowSnackbar, toggleSnackbar } = useSnackbar()
+  const { handleRenderSnackbar, handleOpenSnackbar } = useSnackbar()
 
   const [formData, setFormData] = useState(formDataInitialState)
 
@@ -47,9 +47,9 @@ export function TaskForm() {
 
     const result = await createTasks(user.id, formData)
 
-    toggleSnackbar(result.message)
-
     setFormData(formDataInitialState)
+
+    handleOpenSnackbars(result.message)
   }
 
   return (
@@ -91,7 +91,7 @@ export function TaskForm() {
         Criar
       </Button>
 
-      {handleShowSnackbar()}
+      {handleRenderSnackbar()}
     </Box>
   )
 }

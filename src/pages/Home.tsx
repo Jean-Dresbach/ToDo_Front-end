@@ -1,26 +1,55 @@
-import { Box, Typography } from "@mui/material"
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
-
-import { TaskForm } from "../components"
-import { useAppSelector } from "../redux"
 import { useNavigate } from "react-router-dom"
+import { Box, Typography } from "@mui/material"
+
+// import { TaskForm } from "../components"
+import {
+  useAppDispatch,
+  useAppSelector,
+  toggleLoading,
+  addUserData
+} from "../redux"
+import { fetchUserData } from "../services/api"
+import { useSnackbar } from "../hooks"
 
 export function Home() {
   const navigate = useNavigate()
-  const user = useAppSelector((state) => state.user)
+  const dispatch = useAppDispatch()
+  const session = useAppSelector((state) => state.session)
+  const { handleOpenSnackbar, handleRenderSnackbar } = useSnackbar()
+
   useEffect(() => {
-    if (!user) {
+    if (!session) {
       navigate("/login")
+    } else {
+      const handleGetUserData = async () => {
+        dispatch(toggleLoading())
+
+        const result = await fetchUserData(session.csrfToken, session.userId)
+
+        dispatch(toggleLoading())
+
+        if (result.code !== 200) {
+          handleOpenSnackbar(result.message, "error")
+
+          setTimeout(() => navigate("/login"), 2000)
+        } else {
+          dispatch(addUserData(result.data))
+
+          handleOpenSnackbar(result.message)
+        }
+      }
+
+      handleGetUserData()
     }
-  }, [user, navigate])
+  }, [dispatch, navigate])
 
   return (
     <Box sx={{ p: 3 }}>
-      <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
-        <TaskForm />
-      </Box>
-
       <Typography>Lista de tarefas</Typography>
+
+      {handleRenderSnackbar()}
     </Box>
   )
 }

@@ -8,16 +8,17 @@ const api = axios.create({
   baseURL: "http://localhost:3333"
 })
 
-let csrfToken = ""
-
 export async function signUp(data: ISignUpUser) {
   try {
-    const response = await api.post("/users", data)
+    const response = await api.post("/users/create", data)
 
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
     }
   }
 }
@@ -25,20 +26,57 @@ export async function signUp(data: ISignUpUser) {
 export async function login(data: ILoginUser) {
   try {
     const response = await api.post("/login", data)
-    console.log(csrfToken)
 
-    csrfToken = response.data.data.session.csrfToken
-
-    console.log(csrfToken)
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
     }
   }
 }
 
-export async function fetchTasks(userId: string) {
+export async function logout(csrfToken: string, userId: string) {
+  try {
+    const response = await api.delete(`/logout/${userId}`, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
+
+export async function fetchUserData(csrfToken: string, userId: string) {
+  try {
+    const response = await api.get(`/users/${userId}/findById`, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
+
+export async function fetchTasks(csrfToken: string, userId: string) {
   try {
     const response = await api.get(`/tasks/${userId}`, {
       headers: {
@@ -49,12 +87,19 @@ export async function fetchTasks(userId: string) {
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
     }
   }
 }
 
-export async function createTasks(userId: string, data: ICreateTask) {
+export async function createTasks(
+  csrfToken: string,
+  userId: string,
+  data: ICreateTask
+) {
   try {
     const response = await api.post(`/tasks/${userId}`, data, {
       headers: {
@@ -62,12 +107,13 @@ export async function createTasks(userId: string, data: ICreateTask) {
       }
     })
 
-    console.log(csrfToken)
-
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
     }
   }
 }

@@ -9,7 +9,8 @@ import {
   useTheme
 } from "@mui/material"
 
-import { useAppDispatch, loginRequest } from "../redux"
+import { toggleLoading, useAppDispatch, addSession } from "../redux"
+import { login } from "../services/api"
 import { useSnackbar, useErrorAlert } from "../hooks"
 import { PasswordInputElement } from "../components"
 
@@ -41,7 +42,11 @@ export function Login() {
 
     setErrorAlertoToIntialState()
 
-    const result = await dispatch(loginRequest(formData)).unwrap()
+    dispatch(toggleLoading())
+
+    const result = await login(formData)
+
+    dispatch(toggleLoading())
 
     if (result.code !== 200) {
       return setErrorAlert({
@@ -51,7 +56,7 @@ export function Login() {
       })
     }
 
-    setErrorAlertoToIntialState()
+    dispatch(addSession(result.data))
 
     handleOpenSnackbar(result.message)
 

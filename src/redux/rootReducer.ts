@@ -5,11 +5,13 @@ import storage from "redux-persist/lib/storage"
 import themeReducer from "./slices/themesSlice"
 import loadingReducer from "./slices/loadingSlice"
 import userReducer from "./slices/userSlice"
+import sessionReducer from "./slices/sessionSlice"
 
 const rootReducer = combineReducers({
   theme: themeReducer,
   loading: loadingReducer,
-  user: userReducer
+  user: userReducer,
+  session: sessionReducer
 })
 
 export const persistedReducer = persistReducer(

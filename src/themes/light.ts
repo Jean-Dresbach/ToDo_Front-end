@@ -3,8 +3,8 @@ import { createTheme } from "@mui/material"
 export const light = createTheme({
   palette: {
     mode: "light",
-    primary: {
-      main: "rgba(112,132,254,1)"
+    background: {
+      paper: "#f1f1f1"
     }
   }
 })

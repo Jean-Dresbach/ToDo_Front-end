@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IUser {
   id: string
   name: string
@@ -14,4 +15,10 @@ export interface ISignUpUser {
 export interface ILoginUser {
   email: string
   password: string
+}
+
+export interface IFetchUserDataResponse {
+  code: number
+  message: string
+  data?: any
 }
