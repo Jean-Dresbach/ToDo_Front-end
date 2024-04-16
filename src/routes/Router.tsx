@@ -1,14 +1,12 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 
-import { Nav } from "../components"
-import { SignUp } from "../pages/SignUp"
-import { Login } from "../pages/Login"
-import { Home } from "../pages/Home"
+import { Header } from "../components"
+import { SignUp, Home, Login, Profile } from "../pages"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Nav />,
+    element: <Header />,
     children: [
       {
         path: "/",
@@ -21,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "/profile",
+        element: <Profile />
       }
     ]
   }

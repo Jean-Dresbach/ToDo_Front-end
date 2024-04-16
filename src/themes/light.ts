@@ -6,5 +6,14 @@ export const light = createTheme({
     background: {
       paper: "#f1f1f1"
     }
+  },
+  components: {
+    MuiMenuItem: {
+      styleOverrides: {
+        disabled: {
+          ba: "blue"
+        }
+      }
+    }
   }
 })
