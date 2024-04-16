@@ -2,7 +2,7 @@ import { Container, Divider, Typography, useTheme } from "@mui/material"
 import { Outlet, useLocation } from "react-router-dom"
 import { Box } from "@mui/system"
 
-import { NavMenu } from "./NavMenu"
+import { ToggleMenuListButton } from "./ToggleMenuListButton"
 import { useAppSelector } from "../redux"
 import { ToggleThemeIconButton } from "./ToggleThemeIconButton"
 
@@ -14,7 +14,7 @@ export function Header() {
 
   const handleButttonView = () => {
     return pathName === "/" || (pathName === "/profile" && user) ? (
-      <NavMenu />
+      <ToggleMenuListButton />
     ) : (
       <ToggleThemeIconButton />
     )
