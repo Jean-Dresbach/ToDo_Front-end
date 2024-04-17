@@ -8,6 +8,7 @@ import userReducer from "./slices/userSlice"
 import sessionReducer from "./slices/sessionSlice"
 import snackbarReducer from "./slices/snackbarSlice"
 import taskModalReducer from "./slices/taskModal"
+import tasksReducer from "./slices/tasksSlice"
 
 const rootReducer = combineReducers({
   theme: themeReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   session: sessionReducer,
   snackbar: snackbarReducer,
+  tasks: tasksReducer,
   taskModal: taskModalReducer
 })
 
