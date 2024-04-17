@@ -46,6 +46,44 @@ export async function updateUser(
   }
 }
 
+export async function fetchUserData(csrfToken: string, userId: string) {
+  try {
+    const response = await api.get(`/users/${userId}/findById`, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
+
+export async function deleteUserAccount(csrfToken: string, userId: string) {
+  try {
+    const response = await api.delete(`/users/${userId}/delete`, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
+
 export async function login(data: ILoginUser) {
   try {
     const response = await api.post("/login", data)
@@ -64,25 +102,6 @@ export async function login(data: ILoginUser) {
 export async function logout(csrfToken: string, userId: string) {
   try {
     const response = await api.delete(`/logout/${userId}`, {
-      headers: {
-        Authorization: csrfToken
-      }
-    })
-
-    return response.data
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      return {
-        code: error.response?.status,
-        message: error.response?.data.message
-      }
-    }
-  }
-}
-
-export async function fetchUserData(csrfToken: string, userId: string) {
-  try {
-    const response = await api.get(`/users/${userId}/findById`, {
       headers: {
         Authorization: csrfToken
       }
