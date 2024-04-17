@@ -137,7 +137,7 @@ export async function fetchTasks(csrfToken: string, userId: string) {
   }
 }
 
-export async function createTasks(
+export async function createTask(
   csrfToken: string,
   userId: string,
   data: ICreateTask
@@ -160,7 +160,7 @@ export async function createTasks(
   }
 }
 
-export async function deleteTasks(
+export async function deleteTask(
   csrfToken: string,
   userId: string,
   taskId: string
