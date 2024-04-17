@@ -9,6 +9,7 @@ import sessionReducer from "./slices/sessionSlice"
 import snackbarReducer from "./slices/snackbarSlice"
 import taskModalReducer from "./slices/taskModal"
 import tasksReducer from "./slices/tasksSlice"
+import paginationReducer from "./slices/paginationSlice"
 
 const rootReducer = combineReducers({
   theme: themeReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   snackbar: snackbarReducer,
   tasks: tasksReducer,
-  taskModal: taskModalReducer
+  taskModal: taskModalReducer,
+  pagination: paginationReducer
 })
 
 export const persistedReducer = persistReducer(
