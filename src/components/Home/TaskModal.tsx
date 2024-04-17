@@ -1,139 +1,163 @@
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import {
   Box,
   Button,
-  Container,
   Divider,
-  MenuItem,
   Modal,
-  Select,
   TextField,
   Typography
 } from "@mui/material"
+
+import {
+  useAppSelector,
+  closeModal,
+  useAppDispatch,
+  openSnackbar,
+  toggleLoading,
+  removeUserData,
+  removeSession
+} from "../../redux"
+import { createTasks } from "../../services/api"
 
 const style = {
   position: "absolute" as const,
   inset: 0,
   width: "100%",
-  maxWidth: "1200px",
-  margin: "auto",
+  maxWidth: "900px",
+  margin: "auto auto 0",
   bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  animation: "bounce .3s"
+  p: 3,
+  animation: "bounce .3s",
+  height: "500px"
 }
 
-export function TransactionModal() {
+export function TaskModal() {
+  const dispatch = useAppDispatch()
+  const session = useAppSelector((state) => state.session)
+  const taskModal = useAppSelector((state) => state.taskModal)
+
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true)
+  const [taskFormData, setTaskFormData] = useState(taskModal.dataInitialState)
+
+  useEffect(() => {
+    if (
+      taskFormData.title.trim() !== "" &&
+      taskFormData.description.trim() !== ""
+    ) {
+      setIsSubmitDisabled(false)
+    } else {
+      setIsSubmitDisabled(true)
+    }
+  }, [taskFormData.description, taskFormData.title])
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
+  }
+
+  const handleCloseModal = () => {
+    dispatch(closeModal())
+    setTaskFormData(taskModal.dataInitialState)
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    dispatch(toggleLoading())
+
+    const result = await createTasks(
+      session?.csrfToken as string,
+      session?.userId as string,
+      taskFormData
+    )
+    console.log(result)
+
+    dispatch(toggleLoading())
+
+    if (result.code === 401) {
+      dispatch(openSnackbar({ text: result.message, severity: "error" }))
+      setTimeout(() => {
+        dispatch(removeUserData())
+        dispatch(removeSession())
+        handleCloseModal()
+      }, 2000)
+    } else if (result.code !== 201) {
+      dispatch(openSnackbar({ text: result.message, severity: "error" }))
+      setTimeout(() => {
+        dispatch(removeUserData())
+        handleCloseModal()
+      }, 2000)
+    } else {
+      dispatch(openSnackbar({ text: result.message }))
+      setTimeout(() => {
+        handleCloseModal()
+      }, 2000)
+    }
+  }
+
   return (
     <Modal
-      open={isOpen}
-      onClose={handleCloseTrasactionModal}
+      open={taskModal.isOpen}
+      onClose={handleCloseModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} component={"form"} onSubmit={handleSubmit}>
-        <Typography gutterBottom id="modal-modal-title" variant="h4">
-          {isUpdate ? "Atulizar Transação" : "Criar Transação"}
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h4">
+          {taskModal.dataInitialState.id !== ""
+            ? "Atulizar Tarefa"
+            : "Criar Tarefa"}
         </Typography>
 
-        <Divider />
+        <Divider sx={{ my: 3 }} />
 
-        <Container
-          maxWidth="md"
+        <Box
+          component={"form"}
+          onSubmit={handleSubmit}
           sx={{
             display: "flex",
-            height: "100%",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center",
-            gap: "15px"
+            height: "362px",
+            maxWidth: "350px",
+            margin: "auto",
+            gap: 3
           }}
         >
+          <TextField
+            label="Título"
+            variant="outlined"
+            name="title"
+            value={taskFormData.title}
+            onChange={handleInputChange}
+            sx={{ width: "100%", maxWidth: "350px" }}
+          />
+
+          <TextField
+            label="Descrição"
+            variant="outlined"
+            name="description"
+            value={taskFormData.description}
+            onChange={handleInputChange}
+            sx={{ width: "100%", maxWidth: "350px" }}
+          />
+
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-            gap={3}
+            sx={{ display: "flex", gap: 2, width: "100%", maxWidth: "350px" }}
           >
-            <Select
-              color={data.type === "Entrada" ? "success" : "error"}
-              name="type"
-              value={data.type}
-              defaultValue={data.type}
-              sx={{
-                fontSize: `${media ? "25px" : "15px"}`,
-                color: `${data.type === "Entrada" ? lightGreen[500] : red[400]}`
-              }}
-              variant="outlined"
-              onChange={handleChange}
+            <Button
+              variant="contained"
+              type="submit"
+              disabled={isSubmitDisabled}
             >
-              <MenuItem key="Entrada" value="Entrada">
-                Entrada
-              </MenuItem>
-
-              <MenuItem key="Saída" value="Saída">
-                Saída
-              </MenuItem>
-            </Select>
-
-            <TextField
-              id="value"
-              name="value"
-              value={data.value}
-              onChange={handleChange}
-              placeholder="0"
-              color="primary"
-              variant="standard"
-              inputProps={{
-                style: {
-                  maxWidth: "250px",
-                  textAlign: "center",
-                  fontSize: `${media ? "50px" : "30px"}`,
-                  height: `${media ? "80px" : "50px"}`,
-                  color: `${
-                    data.value !== ""
-                      ? data.type === "Entrada"
-                        ? lightGreen[500]
-                        : red[400]
-                      : ""
-                  }`,
-                  padding: 0
-                }
-              }}
-            />
-          </Box>
-
-          <Button
-            variant="text"
-            color="inherit"
-            sx={{ my: 1, gap: 1 }}
-            onClick={toggleTagModalOpen}
-          >
-            {data.tag.name === "" ? (
-              <>
-                <TagIcon
-                  color={data.type === "Entrada" ? "success" : "error"}
-                />
-                selecione sua tag
-              </>
-            ) : (
-              <>
-                <Typography>{data.tag.emoji}</Typography>
-                <Typography>{data.tag.name}</Typography>
-              </>
-            )}
-          </Button>
-
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Button variant="outlined" onClick={handleCloseTrasactionModal}>
+              Confirmar
+            </Button>
+            <Button variant="outlined" color="error" onClick={handleCloseModal}>
               Cancel
             </Button>
-            <Button variant="contained" type="submit" disabled={disabled}>
-              {isUpdate ? "Atualizar" : "Criar"}
-            </Button>
           </Box>
-        </Container>
+        </Box>
       </Box>
     </Modal>
   )
