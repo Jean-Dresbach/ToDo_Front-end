@@ -12,8 +12,7 @@ import {
 } from "../redux"
 import { fetchUserData } from "../services/api"
 import { AddTaskRounded } from "@mui/icons-material"
-import { TaskModal } from "../components/Home/TaskModal"
-import { Pagination } from "../components/Home/Pagination"
+import { Pagination, TaskList, TaskModal } from "../components"
 
 export function Home() {
   const dispatch = useAppDispatch()
@@ -77,9 +76,12 @@ export function Home() {
           flexGrow: 1,
           border: `1px solid ${theme.palette.grey[700]}`,
           borderRadius: 3,
-          height: "100%"
+          height: "100%",
+          overflowY: "auto"
         }}
-      ></Box>
+      >
+        <TaskList />
+      </Box>
 
       <Button
         variant="contained"
