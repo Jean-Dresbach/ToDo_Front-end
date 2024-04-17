@@ -9,16 +9,20 @@ import {
   useTheme
 } from "@mui/material"
 
-import { toggleLoading, useAppDispatch, addSession } from "../redux"
+import {
+  toggleLoading,
+  useAppDispatch,
+  addSession,
+  openSnackbar
+} from "../redux"
 import { login } from "../services/api"
-import { useSnackbar, useErrorAlert } from "../hooks"
+import { useErrorAlert } from "../hooks/useErrorAlert"
 import { PasswordInputElement } from "../components"
 
 export function Login() {
   const theme = useTheme()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { handleRenderSnackbar, handleOpenSnackbar } = useSnackbar()
   const {
     handleShowErrorAlert,
     setErrorAlertoToIntialState,
@@ -58,13 +62,14 @@ export function Login() {
 
     dispatch(addSession(result.data))
 
-    handleOpenSnackbar(result.message)
+    dispatch(openSnackbar({ text: result.message }))
 
     setTimeout(() => navigate("/"), 2000)
   }
 
   return (
     <Box
+      component="main"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -131,8 +136,6 @@ export function Login() {
           </Link>
         </Typography>
       </Box>
-
-      {handleRenderSnackbar()}
     </Box>
   )
 }

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Box, Typography } from "@mui/material"
@@ -8,21 +7,21 @@ import {
   useAppDispatch,
   useAppSelector,
   toggleLoading,
-  addUserData
+  addUserData,
+  openSnackbar
 } from "../redux"
 import { fetchUserData } from "../services/api"
-import { useSnackbar } from "../hooks"
 
 export function Home() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const session = useAppSelector((state) => state.session)
-  const { handleOpenSnackbar, handleRenderSnackbar } = useSnackbar()
+  const user = useAppSelector((state) => state.user)
 
   useEffect(() => {
     if (!session) {
       navigate("/login")
-    } else {
+    } else if (!user) {
       const handleGetUserData = async () => {
         dispatch(toggleLoading())
 
@@ -31,25 +30,23 @@ export function Home() {
         dispatch(toggleLoading())
 
         if (result.code !== 200) {
-          handleOpenSnackbar(result.message, "error")
+          dispatch(openSnackbar({ text: result.message, severity: "error" }))
 
           setTimeout(() => navigate("/login"), 2000)
         } else {
           dispatch(addUserData(result.data))
 
-          handleOpenSnackbar(result.message)
+          dispatch(openSnackbar({ text: result.message }))
         }
       }
 
       handleGetUserData()
     }
-  }, [])
+  }, [session, user, dispatch, navigate])
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3 }} component="main">
       <Typography>Lista de tarefas</Typography>
-
-      {handleRenderSnackbar()}
     </Box>
   )
 }

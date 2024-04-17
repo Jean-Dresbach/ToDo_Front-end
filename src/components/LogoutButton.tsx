@@ -8,9 +8,9 @@ import {
   toggleLoading,
   removeUserData,
   removeSession,
-  removeTasks
+  removeTasks,
+  openSnackbar
 } from "../redux"
-import { useSnackbar } from "../hooks"
 import { logout } from "../services/api"
 import { ISession } from "../types/session"
 
@@ -20,7 +20,6 @@ export function LogoutButton() {
   ) as ISession
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { handleRenderSnackbar, handleOpenSnackbar } = useSnackbar()
 
   const handleLogout = async () => {
     dispatch(toggleLoading())
@@ -30,11 +29,11 @@ export function LogoutButton() {
     dispatch(toggleLoading())
 
     if (result.code !== 200) {
-      handleOpenSnackbar(result.message, "error")
+      dispatch(openSnackbar({ text: result.message, severity: "error" }))
 
       setTimeout(() => navigate("/login"), 2000)
     } else {
-      handleOpenSnackbar(result.message)
+      dispatch(openSnackbar({ text: result.message }))
 
       setTimeout(() => {
         dispatch(removeTasks())
@@ -57,8 +56,6 @@ export function LogoutButton() {
       </ListItemIcon>
 
       <ListItemText>Sair</ListItemText>
-
-      {handleRenderSnackbar()}
     </MenuItem>
   )
 }

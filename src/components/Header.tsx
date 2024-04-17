@@ -1,12 +1,24 @@
-import { Container, Divider, Typography, useTheme } from "@mui/material"
+import { ComponentType } from "react"
+import {
+  Alert,
+  Container,
+  Divider,
+  Slide,
+  Snackbar,
+  Typography,
+  useTheme
+} from "@mui/material"
 import { Outlet, useLocation } from "react-router-dom"
 import { Box } from "@mui/system"
+import { TransitionProps } from "@mui/material/transitions"
 
+import { useAppSelector, closeSnackbar, useAppDispatch } from "../redux"
 import { ToggleMenuListButton } from "./ToggleMenuListButton"
-import { useAppSelector } from "../redux"
 import { ToggleThemeIconButton } from "./ToggleThemeIconButton"
 
 export function Header() {
+  const dispatch = useAppDispatch()
+  const snackbar = useAppSelector((state) => state.snackbar)
   const themeMui = useTheme()
   const pathName = useLocation().pathname
 
@@ -18,6 +30,14 @@ export function Header() {
     ) : (
       <ToggleThemeIconButton />
     )
+  }
+
+  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    dispatch(closeSnackbar())
   }
 
   return (
@@ -52,6 +72,21 @@ export function Header() {
       <Divider />
 
       <Outlet />
+
+      <Snackbar
+        open={snackbar.isOpen}
+        autoHideDuration={1500}
+        onClose={handleClose}
+        TransitionComponent={Slide as ComponentType<TransitionProps>}
+      >
+        <Alert
+          severity={snackbar.severity}
+          sx={{ width: "100%", color: "white" }}
+          variant="filled"
+        >
+          {snackbar.text}
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }

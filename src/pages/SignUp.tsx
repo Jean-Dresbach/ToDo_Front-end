@@ -9,9 +9,9 @@ import {
   useTheme
 } from "@mui/material"
 
-import { useAppDispatch, toggleLoading } from "../redux"
+import { useAppDispatch, toggleLoading, openSnackbar } from "../redux"
 import { signUp } from "../services/api"
-import { useSnackbar, useErrorAlert } from "../hooks"
+import { useErrorAlert } from "../hooks/useErrorAlert"
 import { PasswordInputElement } from "../components"
 
 export function SignUp() {
@@ -26,7 +26,6 @@ export function SignUp() {
     confirm: ""
   })
 
-  const { handleRenderSnackbar, handleOpenSnackbar } = useSnackbar()
   const {
     handleShowErrorAlert,
     setErrorAlertoToIntialState,
@@ -69,13 +68,14 @@ export function SignUp() {
 
     setErrorAlertoToIntialState()
 
-    handleOpenSnackbar(result.message)
+    dispatch(openSnackbar({ text: result.message }))
 
     setTimeout(() => navigate("/login"), 2000)
   }
 
   return (
     <Box
+      component="main"
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -158,8 +158,6 @@ export function SignUp() {
           </Link>
         </Typography>
       </Box>
-
-      {handleRenderSnackbar()}
     </Box>
   )
 }
