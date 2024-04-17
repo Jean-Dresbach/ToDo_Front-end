@@ -1,24 +1,19 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import {
-  Box,
-  Button,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from "@mui/material"
+import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material"
 
-// import { TaskForm } from "../components"
 import {
   useAppDispatch,
   useAppSelector,
   toggleLoading,
   addUserData,
-  openSnackbar
+  openSnackbar,
+  openModal
 } from "../redux"
 import { fetchUserData } from "../services/api"
 import { AddTaskRounded } from "@mui/icons-material"
+import { TaskModal } from "../components/Home/TaskModal"
+import { Pagination } from "../components/Home/Pagination"
 
 export function Home() {
   const dispatch = useAppDispatch()
@@ -75,6 +70,8 @@ export function Home() {
         Lista de tarefas
       </Typography>
 
+      <Pagination />
+
       <Box
         sx={{
           flexGrow: 1,
@@ -88,9 +85,12 @@ export function Home() {
         variant="contained"
         startIcon={<AddTaskRounded />}
         sx={{ alignSelf: media ? "end" : "" }}
+        onClick={() => dispatch(openModal())}
       >
         Nova tarefa
       </Button>
+
+      <TaskModal />
     </Box>
   )
 }

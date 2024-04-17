@@ -9,6 +9,10 @@ body,
   height: 100vh;
 }
 
+.pagination div {
+  padding: 0 !important;
+}
+
 @keyframes bounce {
   0% {
     transform: translateY(100%) scale(0.2);

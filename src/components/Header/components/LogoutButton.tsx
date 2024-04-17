@@ -36,8 +36,8 @@ export function LogoutButton() {
       dispatch(openSnackbar({ text: result.message }))
 
       setTimeout(() => {
-        dispatch(removeTasks())
         dispatch(removeUserData())
+        dispatch(removeTasks())
         dispatch(removeSession())
         navigate("/login")
       }, 2000)

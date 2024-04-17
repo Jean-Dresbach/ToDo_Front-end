@@ -2,17 +2,17 @@ import { createSlice } from "@reduxjs/toolkit"
 
 import { ITask } from "../../types/task"
 
-const initialState: ITask[] | null = null
+const initialState: ITask[] = []
 
 const tasksSlice = createSlice({
   name: "tasks",
-  initialState: initialState as ITask[] | null,
+  initialState,
   reducers: {
     addTask(_, action) {
       return action.payload
     },
     removeTasks() {
-      return null
+      return []
     }
   }
 })
