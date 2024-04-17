@@ -11,13 +11,11 @@ const snackbarSlice = createSlice({
   name: "snackbar",
   initialState,
   reducers: {
-    openSnackbar(_, actions: PayloadAction<IOpenSnackbar>) {
+    openSnackbar(_, action: PayloadAction<IOpenSnackbar>) {
       return {
         isOpen: true,
-        text: actions.payload.text,
-        severity: actions.payload.severity
-          ? actions.payload.severity
-          : "success"
+        text: action.payload.text,
+        severity: action.payload.severity ? action.payload.severity : "success"
       }
     },
     closeSnackbar() {

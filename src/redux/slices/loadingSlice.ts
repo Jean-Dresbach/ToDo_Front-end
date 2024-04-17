@@ -4,7 +4,7 @@ const loadingSlice = createSlice({
   name: "loading",
   initialState: false,
   reducers: {
-    toggleLoading: (state) => {
+    toggleLoading(state) {
       return !state
     }
   }
