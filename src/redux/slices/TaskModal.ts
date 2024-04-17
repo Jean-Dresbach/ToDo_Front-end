@@ -15,11 +15,11 @@ export const taskModalSlice = createSlice({
   name: "taskModal",
   initialState,
   reducers: {
-    openModal(state, action: PayloadAction<ITask | null>) {
+    openModal(_, action: PayloadAction<ITask | undefined>) {
       if (action?.payload) {
         return { isOpen: true, dataInitialState: action.payload }
       } else {
-        return { ...state, isOpen: true }
+        return { isOpen: true, dataInitialState: initialState.dataInitialState }
       }
     },
     closeModal() {
@@ -27,3 +27,6 @@ export const taskModalSlice = createSlice({
     }
   }
 })
+
+export const { openModal, closeModal } = taskModalSlice.actions
+export default taskModalSlice.reducer

@@ -7,13 +7,15 @@ import loadingReducer from "./slices/loadingSlice"
 import userReducer from "./slices/userSlice"
 import sessionReducer from "./slices/sessionSlice"
 import snackbarReducer from "./slices/snackbarSlice"
+import taskModalReducer from "./slices/taskModal"
 
 const rootReducer = combineReducers({
   theme: themeReducer,
   loading: loadingReducer,
   user: userReducer,
   session: sessionReducer,
-  snackbar: snackbarReducer
+  snackbar: snackbarReducer,
+  taskModal: taskModalReducer
 })
 
 export const persistedReducer = persistReducer(

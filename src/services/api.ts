@@ -143,7 +143,7 @@ export async function createTasks(
   data: ICreateTask
 ) {
   try {
-    const response = await api.post(`/tasks/${userId}`, data, {
+    const response = await api.post(`/tasks/${userId}/create`, data, {
       headers: {
         Authorization: csrfToken
       }
