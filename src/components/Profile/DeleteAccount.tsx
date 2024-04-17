@@ -57,6 +57,7 @@ export function DeleteAccount() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          flexWrap: "wrap",
           gap: 3
         }}
       >
