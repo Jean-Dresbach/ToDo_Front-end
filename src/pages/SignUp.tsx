@@ -75,7 +75,6 @@ export function SignUp() {
 
   return (
     <Box
-      component="main"
       sx={{
         display: "flex",
         justifyContent: "center",

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Box, Button, Typography } from "@mui/material"
 
 import { deleteUserAccount } from "../../services/api"
-import { ConfirmModal } from "./ConfirmModal"
+import { ConfirmModal } from "../ConfirmModal"
 import {
   openSnackbar,
   removeSession,

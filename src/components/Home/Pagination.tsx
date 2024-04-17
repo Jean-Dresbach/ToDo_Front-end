@@ -53,7 +53,8 @@ export function Pagination() {
       sx={{
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        mb: 2
       }}
     >
       <Box sx={{ display: "flex", gap: 1 }}>
@@ -97,7 +98,7 @@ export function Pagination() {
           <FormHelperText
             sx={{ textAlign: "center", fontSize: "10px", m: 0, mt: 1 }}
           >
-            Transações por página
+            Tarefas por página
           </FormHelperText>
         </FormControl>
       </Box>

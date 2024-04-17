@@ -44,9 +44,10 @@ export function Header() {
     <Container
       maxWidth="md"
       sx={{
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
+        position: "relative",
         padding: "0 !important",
         boxShadow: 20,
         bgcolor: themeMui.palette.background.paper
@@ -71,7 +72,18 @@ export function Header() {
 
       <Divider />
 
-      <Outlet />
+      <Box
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          p: 3,
+          overflow: "auto"
+        }}
+        component="main"
+      >
+        <Outlet />
+      </Box>
 
       <Snackbar
         open={snackbar.isOpen}

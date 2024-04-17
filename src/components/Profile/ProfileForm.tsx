@@ -11,7 +11,7 @@ import {
   removeUserData
 } from "../../redux"
 import { updateUser } from "../../services/api"
-import { ConfirmModal } from "./ConfirmModal"
+import { ConfirmModal } from "../ConfirmModal"
 
 export function ProfileForm() {
   const dispatch = useAppDispatch()

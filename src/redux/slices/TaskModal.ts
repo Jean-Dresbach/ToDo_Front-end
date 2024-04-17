@@ -7,7 +7,8 @@ const initialState: ITaskModal = {
   dataInitialState: {
     id: "",
     title: "",
-    description: ""
+    description: "",
+    status: "PENDENTE"
   }
 }
 

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Box, Button, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 
 import {
   useAppDispatch,
@@ -20,9 +20,6 @@ export function Home() {
   const user = useAppSelector((state) => state.user)
 
   const navigate = useNavigate()
-
-  const theme = useTheme()
-  const media = useMediaQuery("(min-width:400px)")
 
   useEffect(() => {
     if (!session) {
@@ -51,48 +48,37 @@ export function Home() {
   }, [session, user, dispatch, navigate])
 
   return (
-    <Box
-      sx={{
-        p: 3,
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        gap: 3
-      }}
-      component="main"
-    >
+    <>
       <Typography
         variant="h4"
         component="h2"
-        sx={{ textAlign: "center", fontWeight: 500, mt: 1 }}
+        sx={{ textAlign: "center", fontWeight: 500, mt: 1, mb: 3 }}
       >
         Lista de tarefas
       </Typography>
 
       <Pagination />
 
-      <Box
-        sx={{
-          flexGrow: 1,
-          border: `1px solid ${theme.palette.grey[700]}`,
-          borderRadius: 3,
-          height: "100%",
-          overflowY: "auto"
-        }}
-      >
-        <TaskList />
-      </Box>
+      <TaskList />
 
       <Button
         variant="contained"
         startIcon={<AddTaskRounded />}
-        sx={{ alignSelf: media ? "end" : "" }}
+        sx={{
+          position: "absolute",
+          width: "max-content",
+          zIndex: 999,
+          bottom: "24px",
+          right: "24px",
+          left: "24px",
+          margin: "0 auto"
+        }}
         onClick={() => dispatch(openModal())}
       >
         Nova tarefa
       </Button>
 
       <TaskModal />
-    </Box>
+    </>
   )
 }

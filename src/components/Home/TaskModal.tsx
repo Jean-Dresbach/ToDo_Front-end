@@ -15,7 +15,8 @@ import {
   openSnackbar,
   toggleLoading,
   removeUserData,
-  removeSession
+  removeSession,
+  removeTasks
 } from "../../redux"
 import { createTasks } from "../../services/api"
 
@@ -53,7 +54,11 @@ export function TaskModal() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
-    setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
+    if (name === "title" && value.length <= 100) {
+      setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
+    } else if (name === "description" && value.length <= 255) {
+      setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
+    }
   }
 
   const handleCloseModal = () => {
@@ -71,7 +76,6 @@ export function TaskModal() {
       session?.userId as string,
       taskFormData
     )
-    console.log(result)
 
     dispatch(toggleLoading())
 
@@ -91,6 +95,7 @@ export function TaskModal() {
     } else {
       dispatch(openSnackbar({ text: result.message }))
       setTimeout(() => {
+        dispatch(removeTasks())
         handleCloseModal()
       }, 2000)
     }

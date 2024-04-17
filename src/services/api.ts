@@ -120,7 +120,7 @@ export async function logout(csrfToken: string, userId: string) {
 
 export async function fetchTasks(csrfToken: string, userId: string) {
   try {
-    const response = await api.get(`/tasks/${userId}`, {
+    const response = await api.get(`/tasks/${userId}/findMany`, {
       headers: {
         Authorization: csrfToken
       }

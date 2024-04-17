@@ -69,7 +69,6 @@ export function Login() {
 
   return (
     <Box
-      component="main"
       sx={{
         display: "flex",
         justifyContent: "center",
