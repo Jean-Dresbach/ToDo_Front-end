@@ -11,7 +11,7 @@ import {
   removeUserData
 } from "../../redux"
 import { updateUser } from "../../services/api"
-import { ConfirmModal } from "../ConfirmModal"
+import { ConfirmModal } from "./ConfirmModal"
 
 export function ProfileForm() {
   const dispatch = useAppDispatch()
@@ -65,12 +65,13 @@ export function ProfileForm() {
 
     dispatch(toggleLoading())
 
-    if (result.code === 401) {
+    if (result.code !== 200) {
       dispatch(openSnackbar({ text: result.message, severity: "error" }))
 
-      setTimeout(() => navigate("/"), 2000)
+      setTimeout(() => navigate("/login"), 2000)
     } else if (result.code === 200) {
       dispatch(removeUserData())
+
       dispatch(openSnackbar({ text: result.message }))
 
       setTimeout(() => navigate("/"), 2000)
@@ -148,6 +149,7 @@ export function ProfileForm() {
         </Grid>
       </Grid>
       <ConfirmModal
+        text="Tem certeza que deseja atualizar seu perfil?"
         isOpen={openConfirmModal}
         setIsOpen={setOpenConfirmModal}
         onConfirm={handleConfirmSubmit}

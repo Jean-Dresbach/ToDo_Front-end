@@ -1,6 +1,7 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material"
 
 import { ProfileForm, SecurityForm } from "../components"
+import { DeleteAccount } from "../components/Profile/DeleteAccount"
 
 export function Profile() {
   const theme = useTheme()
@@ -47,6 +48,23 @@ export function Profile() {
         <Divider sx={{ my: 3 }} />
 
         <SecurityForm />
+      </Box>
+
+      <Box
+        component="section"
+        sx={{
+          border: `1px solid ${theme.palette.error.main}`,
+          borderRadius: 2,
+          p: 3
+        }}
+      >
+        <Typography variant="h5" component="h2" fontWeight={500}>
+          Conta
+        </Typography>
+
+        <Divider sx={{ my: 3 }} />
+
+        <DeleteAccount />
       </Box>
     </Box>
   )

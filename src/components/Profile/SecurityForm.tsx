@@ -11,7 +11,7 @@ import {
   removeUserData
 } from "../../redux"
 import { updateUser } from "../../services/api"
-import { ConfirmModal } from "../ConfirmModal"
+import { ConfirmModal } from "./ConfirmModal"
 import { PasswordInputElement } from "../PasswordInputElement"
 import { useErrorAlert } from "../../hooks/useErrorAlert"
 
@@ -160,13 +160,14 @@ export function SecurityForm() {
         )}
 
         <Grid item xs={12}>
-          <Button variant="contained" type="submit">
+          <Button variant="contained" color="warning" type="submit">
             Atualizar senha
           </Button>
         </Grid>
       </Grid>
 
       <ConfirmModal
+        text="Tem certeza que deseja atualizar sua senha?"
         isOpen={openConfirmModal}
         setIsOpen={setOpenConfirmModal}
         onConfirm={handleConfirmSubmit}
