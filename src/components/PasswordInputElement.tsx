@@ -10,6 +10,7 @@ import {
 
 interface PasswordInputElementProps {
   name: string
+  color?: "primary" | "error" | "secondary" | "info" | "success" | "warning"
   value: string
   errorCase: boolean
   label: string
@@ -21,6 +22,7 @@ export function PasswordInputElement({
   value,
   errorCase,
   label,
+  color,
   handleInputChange
 }: PasswordInputElementProps) {
   const [showPassword, setShowPassword] = useState(false)
@@ -33,7 +35,7 @@ export function PasswordInputElement({
     <FormControl
       sx={{ width: "100%" }}
       variant="outlined"
-      color={errorCase ? "error" : "primary"}
+      color={errorCase ? "error" : color ? color : "primary"}
       required
     >
       <InputLabel htmlFor={`outlined-adornment-${name}`}>{label}</InputLabel>

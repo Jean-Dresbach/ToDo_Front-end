@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button, Grid, TextField, Typography } from "@mui/material"
+import { Box, Button, Grid, Typography } from "@mui/material"
 import { blueGrey } from "@mui/material/colors"
 
 import {
@@ -12,44 +12,48 @@ import {
 } from "../../redux"
 import { updateUser } from "../../services/api"
 import { ConfirmModal } from "../ConfirmModal"
+import { PasswordInputElement } from "../PasswordInputElement"
+import { useErrorAlert } from "../../hooks/useErrorAlert"
 
-export function ProfileForm() {
+const initialState = {
+  password: "",
+  confirm: ""
+}
+
+export function SecurityForm() {
   const dispatch = useAppDispatch()
-  const user = useAppSelector((state) => state.user)
   const session = useAppSelector((state) => state.session)
 
   const navigate = useNavigate()
 
+  const {
+    handleShowErrorAlert,
+    setErrorAlertoToIntialState,
+    errorAlert,
+    setErrorAlert
+  } = useErrorAlert()
+
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
-  const [disabled, setDisabled] = useState(true)
-  const [profileFormData, setProfileFormData] = useState({
-    name: user?.name,
-    email: user?.email
-  })
-
-  useEffect(() => {
-    const handleCheckProfileInputs = () => {
-      if (
-        profileFormData.email !== user?.email ||
-        profileFormData.name !== user?.name
-      ) {
-        setDisabled(false)
-      } else {
-        setDisabled(true)
-      }
-    }
-
-    handleCheckProfileInputs()
-  }, [profileFormData.email, profileFormData.name, user?.email, user?.name])
+  const [securityFormData, setSecurityFormData] = useState(initialState)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
-    setProfileFormData((prev) => ({ ...prev, [name]: value }))
+    setSecurityFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (securityFormData.password !== securityFormData.confirm) {
+      return setErrorAlert({
+        isOpen: true,
+        field: "password",
+        message: "As senhas não coincidem"
+      })
+    }
+
+    setErrorAlertoToIntialState()
 
     setOpenConfirmModal(true)
   }
@@ -60,7 +64,7 @@ export function ProfileForm() {
     const result = await updateUser(
       session?.csrfToken as string,
       session?.userId as string,
-      profileFormData
+      { password: securityFormData.password }
     )
 
     dispatch(toggleLoading())
@@ -71,6 +75,7 @@ export function ProfileForm() {
       setTimeout(() => navigate("/"), 2000)
     } else if (result.code === 200) {
       dispatch(removeUserData())
+
       dispatch(openSnackbar({ text: result.message }))
 
       setTimeout(() => navigate("/"), 2000)
@@ -89,11 +94,11 @@ export function ProfileForm() {
           sx={{ display: "flex", alignItems: "center", mb: 3 }}
         >
           <Typography
-            htmlFor="email-profile-form"
+            htmlFor="password-security-form"
             component="label"
             color={blueGrey[200]}
           >
-            E-MAIL
+            NOVA SENHA
           </Typography>
         </Grid>
         <Grid
@@ -102,14 +107,16 @@ export function ProfileForm() {
           sm={9.5}
           sx={{ display: "flex", alignItems: "center", mb: 3 }}
         >
-          <TextField
-            id="email-profile-form"
-            name="email"
-            value={profileFormData.email}
-            onChange={handleInputChange}
-            sx={{ width: "100%", maxWidth: "350px" }}
-            required
-          />
+          <Box sx={{ width: "100%", maxWidth: "350px" }}>
+            <PasswordInputElement
+              color="warning"
+              name="password"
+              value={securityFormData.password}
+              errorCase={errorAlert.field === "password"}
+              handleInputChange={handleInputChange}
+              label="Senha"
+            />
+          </Box>
         </Grid>
         <Grid
           item
@@ -121,8 +128,9 @@ export function ProfileForm() {
             htmlFor="name-profile-form"
             component="label"
             color={blueGrey[200]}
+            sx={{ mr: 2 }}
           >
-            NOME
+            CONFIRME A SENHA
           </Typography>
         </Grid>
         <Grid
@@ -131,22 +139,33 @@ export function ProfileForm() {
           sm={9.5}
           sx={{ display: "flex", alignItems: "center", mb: 3 }}
         >
-          <TextField
-            id="name-profile-form"
-            name="name"
-            value={profileFormData.name}
-            onChange={handleInputChange}
-            sx={{ width: "100%", maxWidth: "350px" }}
-            required
-          />
+          <Box sx={{ width: "100%", maxWidth: "350px" }}>
+            <PasswordInputElement
+              color="warning"
+              name="confirm"
+              value={securityFormData.confirm}
+              errorCase={errorAlert.field === "password"}
+              handleInputChange={handleInputChange}
+              label="Confirme senha"
+            />
+          </Box>
         </Grid>
 
+        {errorAlert.isOpen && (
+          <Grid item xs={12} sx={{ mb: 3 }}>
+            <Box sx={{ width: "100%", maxWidth: "517px" }}>
+              {handleShowErrorAlert()}
+            </Box>
+          </Grid>
+        )}
+
         <Grid item xs={12}>
-          <Button variant="contained" type="submit" disabled={disabled}>
-            Atualizar perfil
+          <Button variant="contained" type="submit">
+            Atualizar senha
           </Button>
         </Grid>
       </Grid>
+
       <ConfirmModal
         isOpen={openConfirmModal}
         setIsOpen={setOpenConfirmModal}

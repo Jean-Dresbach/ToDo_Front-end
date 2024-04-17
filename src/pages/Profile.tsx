@@ -1,6 +1,6 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material"
 
-import { ProfileForm } from "../components"
+import { ProfileForm, SecurityForm } from "../components"
 
 export function Profile() {
   const theme = useTheme()
@@ -11,7 +11,7 @@ export function Profile() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: 2,
+        gap: 3,
         p: 3
       }}
     >
@@ -30,6 +30,23 @@ export function Profile() {
         <Divider sx={{ my: 3 }} />
 
         <ProfileForm />
+      </Box>
+
+      <Box
+        component="section"
+        sx={{
+          border: `1px solid ${theme.palette.warning.main}`,
+          borderRadius: 2,
+          p: 3
+        }}
+      >
+        <Typography variant="h5" component="h2" fontWeight={500}>
+          Segurança
+        </Typography>
+
+        <Divider sx={{ my: 3 }} />
+
+        <SecurityForm />
       </Box>
     </Box>
   )
