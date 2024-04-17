@@ -159,3 +159,26 @@ export async function createTasks(
     }
   }
 }
+
+export async function deleteTasks(
+  csrfToken: string,
+  userId: string,
+  taskId: string
+) {
+  try {
+    const response = await api.post(`/tasks/${userId}/delete/${taskId}`, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
