@@ -73,8 +73,8 @@ export function Login() {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        height: "100%"
+        p: 3,
+        my: "auto"
       }}
     >
       <Box
@@ -124,7 +124,7 @@ export function Login() {
         </Button>
 
         <Typography>
-          Nãp tem uma conta?{" "}
+          Não tem uma conta?{" "}
           <Link
             to="/signup"
             style={{

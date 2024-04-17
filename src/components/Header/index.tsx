@@ -46,7 +46,7 @@ export function Header() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "100%",
+        height: "100%",
         padding: "0 !important",
         boxShadow: 20,
         bgcolor: themeMui.palette.background.paper

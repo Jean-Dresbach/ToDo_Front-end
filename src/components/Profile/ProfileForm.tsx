@@ -148,6 +148,7 @@ export function ProfileForm() {
           </Button>
         </Grid>
       </Grid>
+
       <ConfirmModal
         text="Tem certeza que deseja atualizar seu perfil?"
         isOpen={openConfirmModal}

@@ -80,7 +80,8 @@ export function SignUp() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%"
+        my: "auto",
+        p: 3
       }}
     >
       <Box

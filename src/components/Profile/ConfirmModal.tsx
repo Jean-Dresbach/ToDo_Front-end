@@ -41,7 +41,7 @@ export function ConfirmModal({
         <Divider sx={{ my: 3 }} />
         <Box sx={{ display: "flex", justifyContent: "end", gap: 2 }}>
           <Button variant="contained" color="error" onClick={onConfirm}>
-            Atualizar
+            Confirmar
           </Button>
           <Button variant="outlined" color="error" onClick={handleClose}>
             Cancelar

@@ -60,7 +60,7 @@ export function DeleteAccount() {
           gap: 3
         }}
       >
-        <Typography>
+        <Typography textAlign={"justify"}>
           Depois de excluir sua conta, não há como voltar atrás. Por favor,
           tenha certeza.
         </Typography>
@@ -68,6 +68,7 @@ export function DeleteAccount() {
           variant="contained"
           color="error"
           onClick={() => setOpenConfirmModal(true)}
+          sx={{ minWidth: "max-content" }}
         >
           Excluir conta
         </Button>

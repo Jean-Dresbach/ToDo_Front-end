@@ -12,6 +12,7 @@ export function Profile() {
       sx={{
         display: "flex",
         flexDirection: "column",
+        bgcolor: theme.palette.background.paper,
         gap: 3,
         p: 3
       }}

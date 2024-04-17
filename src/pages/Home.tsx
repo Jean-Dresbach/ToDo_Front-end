@@ -1,6 +1,13 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Box, Typography } from "@mui/material"
+import {
+  Box,
+  Button,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from "@mui/material"
 
 // import { TaskForm } from "../components"
 import {
@@ -11,12 +18,17 @@ import {
   openSnackbar
 } from "../redux"
 import { fetchUserData } from "../services/api"
+import { AddTaskRounded } from "@mui/icons-material"
 
 export function Home() {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const session = useAppSelector((state) => state.session)
   const user = useAppSelector((state) => state.user)
+
+  const navigate = useNavigate()
+
+  const theme = useTheme()
+  const media = useMediaQuery("(min-width:400px)")
 
   useEffect(() => {
     if (!session) {
@@ -45,8 +57,40 @@ export function Home() {
   }, [session, user, dispatch, navigate])
 
   return (
-    <Box sx={{ p: 3 }} component="main">
-      <Typography>Lista de tarefas</Typography>
+    <Box
+      sx={{
+        p: 3,
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        gap: 3
+      }}
+      component="main"
+    >
+      <Typography
+        variant="h4"
+        component="h2"
+        sx={{ textAlign: "center", fontWeight: 500, mt: 1 }}
+      >
+        Lista de tarefas
+      </Typography>
+
+      <Box
+        sx={{
+          flexGrow: 1,
+          border: `1px solid ${theme.palette.grey[700]}`,
+          borderRadius: 3,
+          height: "100%"
+        }}
+      ></Box>
+
+      <Button
+        variant="contained"
+        startIcon={<AddTaskRounded />}
+        sx={{ alignSelf: media ? "end" : "" }}
+      >
+        Nova tarefa
+      </Button>
     </Box>
   )
 }
