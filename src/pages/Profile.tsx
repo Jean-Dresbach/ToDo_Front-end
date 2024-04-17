@@ -1,6 +1,6 @@
 import { Box, Divider, Typography, useTheme } from "@mui/material"
 
-import { ProfileForm } from "../components/ProfileForm"
+import { ProfileForm } from "../components"
 
 export function Profile() {
   const theme = useTheme()

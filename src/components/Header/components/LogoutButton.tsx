@@ -10,9 +10,9 @@ import {
   removeSession,
   removeTasks,
   openSnackbar
-} from "../redux"
-import { logout } from "../services/api"
-import { ISession } from "../types/session"
+} from "../../../redux"
+import { logout } from "../../../services/api"
+import { ISession } from "../../../types/session"
 
 export function LogoutButton() {
   const { csrfToken, userId } = useAppSelector(

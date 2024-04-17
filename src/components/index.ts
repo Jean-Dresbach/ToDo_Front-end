@@ -1,4 +1,5 @@
 export * from "./LodingBackdrop"
 export * from "./Header"
-export * from "./PasswordInputElement"
+export * from "./SignUp&Login/PasswordInputElement"
+export * from "./Profile"
 export * from "./TaskForm"
