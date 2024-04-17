@@ -2,7 +2,7 @@ import { PermIdentity, ExpandMoreRounded } from "@mui/icons-material"
 import { Button, useMediaQuery } from "@mui/material"
 import { useState, MouseEvent } from "react"
 
-import { useAppSelector } from "../../../redux"
+import { useAppSelector } from "../../redux"
 import { MenuElement } from "./MenuElement"
 
 export function ToggleMenuListButton() {

@@ -1,4 +1,7 @@
 import { ComponentType } from "react"
+import { Outlet, useLocation } from "react-router-dom"
+import { Box } from "@mui/system"
+import { TransitionProps } from "@mui/material/transitions"
 import {
   Alert,
   Container,
@@ -8,13 +11,10 @@ import {
   Typography,
   useTheme
 } from "@mui/material"
-import { Outlet, useLocation } from "react-router-dom"
-import { Box } from "@mui/system"
-import { TransitionProps } from "@mui/material/transitions"
 
 import { useAppSelector, closeSnackbar, useAppDispatch } from "../../redux"
-import { ToggleMenuListButton } from "./components/ToggleMenuListButton"
-import { ToggleThemeIconButton } from "./components/ToggleThemeIconButton"
+import { ToggleMenuListButton } from "./ToggleMenuListButton"
+import { ToggleThemeIconButton } from "./ToggleThemeIconButton"
 
 export function Header() {
   const dispatch = useAppDispatch()

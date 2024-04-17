@@ -1,7 +1,7 @@
 import { DarkMode, DesktopWindowsRounded, LightMode } from "@mui/icons-material"
 import { Box, Button, Typography } from "@mui/material"
 
-import { setTheme, useAppDispatch, useAppSelector } from "../../../redux"
+import { setTheme, useAppDispatch, useAppSelector } from "../../redux"
 
 export function ToggleThemeNavMenuButtom() {
   const theme = useAppSelector((state) => state.theme)
