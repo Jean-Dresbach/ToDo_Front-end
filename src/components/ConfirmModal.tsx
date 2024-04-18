@@ -21,7 +21,7 @@ const style = {
   boxShadow: 24,
   p: 3,
   animation: "bounce .3s",
-  zIndex: 1
+  zIndex: 8000
 }
 
 export function ConfirmModal({

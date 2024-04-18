@@ -166,7 +166,7 @@ export async function deleteTask(
   taskId: string
 ) {
   try {
-    const response = await api.post(`/tasks/${userId}/delete/${taskId}`, {
+    const response = await api.delete(`/tasks/${userId}/delete/${taskId}`, {
       headers: {
         Authorization: csrfToken
       }

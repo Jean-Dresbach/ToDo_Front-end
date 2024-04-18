@@ -18,7 +18,7 @@ import {
   removeSession,
   removeTasks
 } from "../../redux"
-import { createTasks } from "../../services/api"
+import { createTask } from "../../services/api"
 
 const style = {
   position: "absolute" as const,
@@ -71,7 +71,7 @@ export function TaskModal() {
 
     dispatch(toggleLoading())
 
-    const result = await createTasks(
+    const result = await createTask(
       session?.csrfToken as string,
       session?.userId as string,
       taskFormData
