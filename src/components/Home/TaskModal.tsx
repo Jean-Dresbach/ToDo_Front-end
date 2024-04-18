@@ -3,9 +3,13 @@ import {
   Box,
   Button,
   Divider,
+  MenuItem,
   Modal,
+  Select,
+  SelectChangeEvent,
   TextField,
-  Typography
+  Typography,
+  useTheme
 } from "@mui/material"
 
 import {
@@ -18,7 +22,7 @@ import {
   removeSession,
   removeTasks
 } from "../../redux"
-import { createTask } from "../../services/api"
+import { createTask, updateTask } from "../../services/api"
 
 const style = {
   position: "absolute" as const,
@@ -29,7 +33,7 @@ const style = {
   bgcolor: "background.paper",
   p: 3,
   animation: "bounce .3s",
-  height: "500px"
+  height: "560px"
 }
 
 export function TaskModal() {
@@ -37,19 +41,47 @@ export function TaskModal() {
   const session = useAppSelector((state) => state.session)
   const taskModal = useAppSelector((state) => state.taskModal)
 
+  const theme = useTheme()
+
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true)
   const [taskFormData, setTaskFormData] = useState(taskModal.dataInitialState)
 
+  const isCreate = taskModal.dataInitialState.id === ""
+
   useEffect(() => {
-    if (
-      taskFormData.title.trim() !== "" &&
-      taskFormData.description.trim() !== ""
-    ) {
-      setIsSubmitDisabled(false)
+    setTaskFormData(taskModal.dataInitialState)
+  }, [taskModal.dataInitialState])
+
+  useEffect(() => {
+    if (isCreate) {
+      if (
+        taskFormData.title.trim() !== "" &&
+        taskFormData.description.trim() !== ""
+      ) {
+        setIsSubmitDisabled(false)
+      } else {
+        setIsSubmitDisabled(true)
+      }
     } else {
-      setIsSubmitDisabled(true)
+      if (
+        taskFormData.title !== taskModal.dataInitialState.title ||
+        taskFormData.description !== taskModal.dataInitialState.description ||
+        taskFormData.status !== taskModal.dataInitialState.status
+      ) {
+        setIsSubmitDisabled(false)
+      } else {
+        setIsSubmitDisabled(true)
+      }
     }
-  }, [taskFormData.description, taskFormData.title])
+  }, [
+    isCreate,
+    taskFormData.description,
+    taskFormData.status,
+    taskFormData.title,
+    taskModal.dataInitialState.description,
+    taskModal.dataInitialState.status,
+    taskModal.dataInitialState.title
+  ])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -58,7 +90,20 @@ export function TaskModal() {
       setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
     } else if (name === "description" && value.length <= 255) {
       setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
+    } else {
+      setTaskFormData((prevState) => ({ ...prevState, [name]: value }))
     }
+  }
+
+  const handleSelectChange = (
+    e: SelectChangeEvent<"PENDENTE" | "EM_PROGRESSO" | "COMPLETA">
+  ) => {
+    const value = e.target.value
+
+    setTaskFormData((prevState) => ({
+      ...prevState,
+      status: value as typeof taskFormData.status
+    }))
   }
 
   const handleCloseModal = () => {
@@ -71,11 +116,18 @@ export function TaskModal() {
 
     dispatch(toggleLoading())
 
-    const result = await createTask(
-      session?.csrfToken as string,
-      session?.userId as string,
-      taskFormData
-    )
+    const result =
+      taskModal.dataInitialState.id === ""
+        ? await createTask(
+            session?.csrfToken as string,
+            session?.userId as string,
+            taskFormData
+          )
+        : await updateTask(
+            session?.csrfToken as string,
+            session?.userId as string,
+            taskFormData
+          )
 
     dispatch(toggleLoading())
 
@@ -86,7 +138,7 @@ export function TaskModal() {
         dispatch(removeSession())
         handleCloseModal()
       }, 2000)
-    } else if (result.code !== 201) {
+    } else if (result.code !== 201 && result.code !== 200) {
       dispatch(openSnackbar({ text: result.message, severity: "error" }))
       setTimeout(() => {
         dispatch(removeUserData())
@@ -101,6 +153,16 @@ export function TaskModal() {
     }
   }
 
+  const handleTaskColor = () => {
+    if (taskFormData.status === "PENDENTE") {
+      return theme.palette.primary.main
+    } else if (taskFormData.status === "EM_PROGRESSO") {
+      return theme.palette.warning.main
+    } else {
+      return theme.palette.success.main
+    }
+  }
+
   return (
     <Modal
       open={taskModal.isOpen}
@@ -110,9 +172,7 @@ export function TaskModal() {
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h4">
-          {taskModal.dataInitialState.id !== ""
-            ? "Atulizar Tarefa"
-            : "Criar Tarefa"}
+          {isCreate ? "Criar Tarefa" : "Atulizar Tarefa"}
         </Typography>
 
         <Divider sx={{ my: 3 }} />
@@ -147,6 +207,35 @@ export function TaskModal() {
             onChange={handleInputChange}
             sx={{ width: "100%", maxWidth: "350px" }}
           />
+
+          <Select
+            color={
+              taskFormData.status === "PENDENTE"
+                ? "primary"
+                : taskFormData.status === "EM_PROGRESSO"
+                ? "warning"
+                : "success"
+            }
+            name="type"
+            value={taskFormData.status}
+            sx={{
+              color: handleTaskColor()
+            }}
+            variant="outlined"
+            onChange={handleSelectChange}
+          >
+            <MenuItem key="PENDENTE" value="PENDENTE">
+              PENDENTE
+            </MenuItem>
+
+            <MenuItem key="EM_PROGRESSO" value="EM_PROGRESSO">
+              EM PROGRESSO
+            </MenuItem>
+
+            <MenuItem key="COMPLETA" value="COMPLETA">
+              COMPLETA
+            </MenuItem>
+          </Select>
 
           <Box
             sx={{ display: "flex", gap: 2, width: "100%", maxWidth: "350px" }}

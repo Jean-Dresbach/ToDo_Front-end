@@ -15,4 +15,12 @@ export interface ITask {
 export interface ICreateTask {
   title: string
   description: string
+  status: TaskStatus
+}
+
+export interface IUpdateTask {
+  id: string
+  title?: string
+  description?: string
+  status?: TaskStatus
 }

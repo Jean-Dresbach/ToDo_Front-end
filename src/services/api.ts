@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios"
 
 import { ISignUpUser, ILoginUser, IUpdateUser } from "../types/user"
-import { ICreateTask } from "../types/task"
+import { ICreateTask, IUpdateTask } from "../types/task"
 
 const api = axios.create({
   withCredentials: true,
@@ -171,6 +171,30 @@ export async function deleteTask(
         Authorization: csrfToken
       }
     })
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return {
+        code: error.response?.status,
+        message: error.response?.data.message
+      }
+    }
+  }
+}
+
+export async function updateTask(
+  csrfToken: string,
+  userId: string,
+  data: IUpdateTask
+) {
+  try {
+    const response = await api.put(`/tasks/${userId}/update/${data.id}`, data, {
+      headers: {
+        Authorization: csrfToken
+      }
+    })
+    console.log(response)
 
     return response.data
   } catch (error) {
