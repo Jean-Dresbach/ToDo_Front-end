@@ -40,6 +40,7 @@ export function TaskModal() {
   const dispatch = useAppDispatch()
   const session = useAppSelector((state) => state.session)
   const taskModal = useAppSelector((state) => state.taskModal)
+  const tasks = useAppSelector((state) => state.tasks)
 
   const theme = useTheme()
 
@@ -147,8 +148,12 @@ export function TaskModal() {
     } else {
       dispatch(openSnackbar({ text: result.message }))
       setTimeout(() => {
-        dispatch(removeTasks())
         handleCloseModal()
+        if (tasks.length === 0) {
+          window.location.reload()
+        } else {
+          dispatch(removeTasks())
+        }
       }, 2000)
     }
   }

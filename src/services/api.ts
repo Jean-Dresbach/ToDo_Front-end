@@ -194,7 +194,6 @@ export async function updateTask(
         Authorization: csrfToken
       }
     })
-    console.log(response)
 
     return response.data
   } catch (error) {

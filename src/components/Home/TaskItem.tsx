@@ -54,13 +54,13 @@ export function TaskItem({ task }: TaskItemProps) {
   const handleDelete = async () => {
     dispatch(toggleLoading())
 
+    setOpenConfirmModal(false)
+
     const result = await deleteTask(
       session?.csrfToken as string,
       session?.userId as string,
       task.id
     )
-
-    console.log(result)
 
     dispatch(toggleLoading())
 
