@@ -24,13 +24,13 @@
 - [![Vite](https://img.shields.io/badge/-Vite-black?logo=vite&logoColor=white&style=for-the-badge)](https://vitejs.dev)
 - ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-## Clonar do GitHub e Instalação
+## GitHub Clone and Installation
 
 ```console
 git clone https://github.com/Jean-Dresbach/ToDo_Front-end.git
 ```
 
-Depois de clonar o repositório, instale as dependências usando Yarn com o seguinte comando:
+After cloning the repository, install the dependencies using Yarn with the following command:
 
 ```console
 yarn install
@@ -38,31 +38,29 @@ yarn install
 
 ## 💡 Features
 
-### Tarefas:
+### Tasks:
 
-- Adicionar nova tarefa.
-- Editar tarefa existente.
-- Excluir tarefa.
-- Visualizar todas as tarefas de um usuário.
+- Add new task.
+- Edit existing task.
+- Delete task.
+- View all of a user's tasks.
 
-### Usuários:
+### Users:
 
-- Adicionar novo usuário (cadastro).
-- Editar usuário existente.
-- Excluir conta de usuário.
-- Visualizar todas as informações do usuário.
+- Add a new user (registration).
+- Edit existing user.
+- Delete user account.
+- View all user information.
 
-### Sessão
+### Session
 
-- Criar sessão (login).
-- Encerrar sessão (logout).
+- Create session (login).
+- Log out.
 
-## 🚀 Rodando a Aplicação
+## 🚀 Running the Application
 
-Para executar a aplicação, é necessário instalar e iniciar a API [ToDo_Back-end](https://github.com/Jean-Dresbach/ToDo_Back-end) em sua máquina. Certifique-se de seguir as instruções de instalação e inicialização fornecidas no repositório do backend antes de prosseguir com o lançamento da aplicação.
+To run the application, you need to install and start the [ToDo_Back-end](https://github.com/Jean-Dresbach/ToDo_Back-end) API on your machine. Make sure you follow the installation and initialization instructions provided in the backend repository before proceeding to launch the application.
 
-Isso garantirá que a aplicação frontend tenha acesso aos recursos e funcionalidades necessários para funcionar corretamente. Após configurar o backend, você estará pronto para iniciar a aplicação frontend e começar a explorar todas as suas funcionalidades!
+This will ensure that the frontend application has access to the features and functionality it needs to work properly. Once you've set up the backend, you're ready to launch the frontend application and start exploring all its features!
 
-Se precisar de mais alguma coisa, estou à disposição para ajudar!
-
-👾 Desenvolvido por [Jean Rafael Dresbach](https://www.linkedin.com/in/jean-rafael-dresbach/).
+👾 Developed by [Jean Rafael Dresbach](https://www.linkedin.com/in/jean-rafael-dresbach/).
