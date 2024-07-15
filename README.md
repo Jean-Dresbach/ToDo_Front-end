@@ -14,15 +14,15 @@
 
 ## 💻 Technologies used
 
-- [![React](https://img.shields.io/badge/-React-blue?logo=react&logoColor=white&style=for-the-badge)](https://react.dev)
-- [![Material-UI](https://img.shields.io/badge/-Material--UI-blue?logo=material-ui&logoColor=white&style=for-the-badge)](https://mui.com)
-- [![Redux Toolkit](https://img.shields.io/badge/-Redux_Toolkit-purple?logo=redux&logoColor=white&style=for-the-badge)](https://redux-toolkit.js.org)
+- ![React](https://img.shields.io/badge/React-149eca?style=for-the-badge&logo=react&logoColor=white)
+- ![Material-UI](https://img.shields.io/badge/Material--UI-%23007FFF?style=for-the-badge&logo=Mui&logoColor=%23fff)
+- ![Redux](https://img.shields.io/badge/Redux-%23764ABC?style=for-the-badge&logo=Redux)
 - [![Axios](https://img.shields.io/badge/-Axios-black?logo=axios&logoColor=white&style=for-the-badge)](https://axios-http.com)
-- [![React Router](https://img.shields.io/badge/-React_Router-orange?logo=react-router&logoColor=white&style=for-the-badge)](https://reactrouter.com)
+- [![React Router](https://img.shields.io/badge/-React_Router_Dom-CA4245?logo=react-router&logoColor=white&style=for-the-badge)](https://reactrouter.com)
 - [![TypeScript](https://img.shields.io/badge/-TypeScript-blue?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org)
+- [![ESLint](https://img.shields.io/badge/-ESLint-4B32C3?logo=eslint&logoColor=white&style=for-the-badge)](https://eslint.org)
 - [![Vite](https://img.shields.io/badge/-Vite-black?logo=vite&logoColor=white&style=for-the-badge)](https://vitejs.dev)
-- [![ESLint](https://img.shields.io/badge/-ESLint-blue?logo=eslint&logoColor=white&style=for-the-badge)](https://eslint.org)
-- [![CSS](https://img.shields.io/badge/-CSS-blue?logo=css3&logoColor=white&style=for-the-badge)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+- ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
 ## Clonar do GitHub e Instalação
 
